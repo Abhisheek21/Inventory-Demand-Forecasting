@@ -1,0 +1,74 @@
+    @Metadata.layer: #CORE
+    
+    // 1. Define the Chart Annotation
+    @UI.chart: [
+      {
+        qualifier: 'StockChart',
+        title: 'Stock Levels vs Reorder Point',
+        chartType: #COLUMN,
+        dimensions: [ 'product_id' ],
+        measures: [ 'current_stock', 'reorder_level' ]
+      }
+    ]
+    
+    annotate view ZC_INV_FORECAST_007 with
+    {
+      @UI.facet: [
+        {
+          id: 'GeneralInfo',
+          type: #IDENTIFICATION_REFERENCE,
+          label: 'Product Details',
+          position: 10
+        },
+        // 2. Add the Chart Facet
+        {
+          id: 'ChartFacet',
+          purpose: #STANDARD,
+          type: #CHART_REFERENCE,
+          label: 'Stock Visualization',
+          targetQualifier: 'StockChart',
+          position: 15 
+        },
+        {
+          id: 'DemandTable',
+          type: #LINEITEM_REFERENCE,
+          label: 'Demand History',
+          position: 20,
+          targetElement: '_Demand'
+        }
+      ]
+    
+      @UI: { 
+        lineItem:       [ { position: 10, label: 'Product ID' },
+                          { type: #FOR_ACTION, dataAction: 'forecast', label: 'Predict Forecast' } ],
+        identification: [ { position: 10, label: 'Product ID' },
+                          { type: #FOR_ACTION, dataAction: 'forecast', label: 'Predict Forecast' } ], 
+        selectionField: [ { position: 10 } ] 
+      }
+      product_id;
+    
+      @UI: { 
+        lineItem:       [ { position: 20, label: 'Product Name' } ],
+        identification: [ { position: 30, label: 'Product Name' } ] 
+      }
+      product_name;
+    
+      @UI: { 
+        lineItem:       [ { position: 30, label: 'Category' } ],
+        identification: [ { position: 40, label: 'Category' } ],
+        selectionField: [ { position: 20 } ] 
+      }
+      category;
+    
+      @UI: { 
+        lineItem:       [ { position: 40, label: 'Current Stock' } ],
+        identification: [ { position: 50, label: 'Current Stock' } ] 
+      }
+      current_stock;
+    
+      @UI: { 
+        lineItem:       [ { position: 50, label: 'Reorder Level' } ],
+        identification: [ { position: 60, label: 'Reorder Level' } ] 
+      }
+      reorder_level;
+    }

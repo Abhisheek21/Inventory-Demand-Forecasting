@@ -1,0 +1,35 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Demand History',
+    typeNamePlural: 'Demand History Records',
+    title: { type: #STANDARD, value: 'demand_id' }
+  }
+}
+annotate view ZC_INV_DEMAND_007 with
+{
+  @UI.facet: [
+    {
+      id: 'DemandDetails',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Demand Record Information',
+      position: 10
+    }
+  ]
+
+  @UI: { lineItem:       [ { position: 10, label: 'Demand ID' } ],
+         identification: [ { position: 10, label: 'Demand ID' } ] }
+  demand_id;
+
+  @UI: { lineItem:       [ { position: 20, label: 'Date' } ],
+         identification: [ { position: 20, label: 'Date' } ] }
+  demand_date;
+
+  @UI: { lineItem:       [ { position: 30, label: 'Quantity Sold' } ],
+         identification: [ { position: 30, label: 'Quantity Sold' } ] }
+  quantity_sold;
+
+  @UI.hidden: true
+  product_id;
+}

@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition for Inventory Forecast'
+define service ZUI_INV_FORECAST_007 {
+  expose ZC_INV_FORECAST_007 as ForecastHeader;
+  expose ZC_INV_DEMAND_007   as DemandItem;
+}

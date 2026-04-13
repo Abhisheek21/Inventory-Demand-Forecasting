@@ -1,0 +1,44 @@
+unmanaged implementation in class ZBP_INV_FORECAST_007 unique;
+strict ( 2 );
+
+define behavior for ZI_INV_FORECAST_007 alias ForecastHeader
+lock master
+authorization master ( instance )
+{
+  create;
+  update;
+  delete;
+
+  association _Demand { create; }
+
+  // UPDATED: Action now accepts parameters
+  action forecast parameter ZPARA_FORECAST_007 result [1] $self;
+
+  mapping for zinv_master_007
+  {
+    product_id = product_id;
+    product_name = product_name;
+    category = category;
+    current_stock = current_stock;
+    reorder_level = reorder_level;
+  }
+}
+
+define behavior for ZI_INV_DEMAND_007 alias DemandItem
+lock dependent by _Header
+authorization dependent by _Header
+{
+  update;
+  delete;
+
+  field ( readonly ) product_id;
+  association _Header;
+
+  mapping for zinv_demand_007
+  {
+    demand_id = demand_id;
+    product_id = product_id;
+    demand_date = demand_date;
+    quantity_sold = quantity_sold;
+  }
+}

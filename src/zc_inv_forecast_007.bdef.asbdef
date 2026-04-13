@@ -1,0 +1,22 @@
+projection;
+strict ( 2 );
+
+define behavior for ZC_INV_FORECAST_007 alias ForecastHeader
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Demand { create; }
+
+  // UPDATED: Simply use the action; it inherits the parameter from the base
+  use action forecast;
+}
+
+define behavior for ZC_INV_DEMAND_007 alias DemandItem
+{
+  use update;
+  use delete;
+
+  use association _Header;
+}
